@@ -1,0 +1,64 @@
+Qiskit 1.0 migration notes
+
+Scope: circuit construction, transpilation, and backend interfaces only.
+
+## Removal notices
+
+### Execution and backend access
+
+- `qiskit.execute` was removed. Use `transpile(circuit, backend)` followed by `backend.run(...)`.
+- `qiskit.Aer` was removed from the top-level namespace. Use `qiskit_aer.Aer`.
+- `qiskit.BasicAer` was removed from the top-level namespace. Use `qiskit.providers.basic_provider`.
+
+### Circuit construction and serialization
+
+- `QuantumCircuit.qasm` was removed. Use `qiskit.qasm2.dump` or `qiskit.qasm2.dumps`.
+- `qiskit.converters.ast_to_dag` was removed along with the legacy OpenQASM 2 parser path. Parse into a `QuantumCircuit` with `qiskit.qasm2.load`, `QuantumCircuit.from_qasm_file`, or `QuantumCircuit.from_qasm_str`, then convert with `circuit_to_dag`.
+
+## API change tables
+
+### Circuit construction: gate helpers removed
+
+| Removed | Alternative |
+| --- | --- |
+| `QuantumCircuit.cnot` | `QuantumCircuit.cx` |
+| `QuantumCircuit.toffoli` | `QuantumCircuit.ccx` |
+| `QuantumCircuit.fredkin` | `QuantumCircuit.cswap` |
+| `QuantumCircuit.mct` | `QuantumCircuit.mcx` |
+| `QuantumCircuit.i` | `QuantumCircuit.id` |
+| `QuantumCircuit.squ` | `QuantumCircuit.unitary` |
+
+### Circuit construction: methods replaced by `append(...)`
+
+| Removed | Alternative |
+| --- | --- |
+| `QuantumCircuit.diagonal` | `QuantumCircuit.append(DiagonalGate(...), qubits)` |
+| `QuantumCircuit.hamiltonian` | `QuantumCircuit.append(HamiltonianGate(...), qubits)` |
+| `QuantumCircuit.isometry` | `QuantumCircuit.append(Isometry(...), qubits)` |
+| `QuantumCircuit.iso` | `QuantumCircuit.append(Isometry(...), qubits)` |
+| `QuantumCircuit.uc` | `QuantumCircuit.append(UCGate(...), qubits)` |
+| `QuantumCircuit.ucrx` | `QuantumCircuit.append(UCRXGate(...), qubits)` |
+| `QuantumCircuit.ucry` | `QuantumCircuit.append(UCRYGate(...), qubits)` |
+| `QuantumCircuit.ucrz` | `QuantumCircuit.append(UCRZGate(...), qubits)` |
+
+### Circuit construction: other removed methods
+
+| Removed | Alternative |
+| --- | --- |
+| `QuantumCircuit.bind_parameters` | `QuantumCircuit.assign_parameters` |
+| `QuantumCircuit.snapshot` | `qiskit-aer` save instructions |
+
+### Transpilation and backend execution
+
+| Removed / changed API | Alternative |
+| --- | --- |
+| `qiskit.execute(circuit, backend)` | `backend.run(transpile(circuit, backend))` |
+| `from qiskit import Aer` | `from qiskit_aer import Aer` |
+| `from qiskit import BasicAer` | `from qiskit.providers.basic_provider import BasicProvider` |
+
+### OpenQASM parsing and DAG conversion
+
+| Removed | Alternative |
+| --- | --- |
+| `qiskit.converters.ast_to_dag` | `circuit_to_dag(qiskit.qasm2.load(...))` |
+| `qiskit.qasm.Qasm(...).parse()` workflow | `qiskit.qasm2.load(...)` or `QuantumCircuit.from_qasm_file(...)` |

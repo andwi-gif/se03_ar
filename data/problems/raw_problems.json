@@ -1,0 +1,302 @@
+[
+    {
+        "id": "qiskitHumanEval/4",
+        "description": "Write the function that converts the matrix [[0, 0, 0, 1],[0, 0, 1, 0],[1, 0, 0, 0],[0, 1, 0, 0]] into a unitary gate and apply it to a Quantum Circuit. Then return the circuit.\nYou must implement this using a function named `create_unitary_from_matrix` with no arguments.",
+        "entry_point": "create_unitary_from_matrix",
+        "test_call": "from qiskit import QuantumCircuit\nresult = create_unitary_from_matrix()\nassert isinstance(result, QuantumCircuit)\nassert result.num_qubits == 2\nassert len(result.data) > 0"
+    },
+    {
+        "id": "qiskitHumanEval/7",
+        "description": "Generate a 1 qubit QuantumCircuit with a parametrized Rx gate with parameter \"theta\".\nYou must implement this using a function named `create_parametrized_gate` with no arguments.",
+        "entry_point": "create_parametrized_gate",
+        "test_call": "circuit = create_parametrized_gate()\nassert circuit.num_qubits == 1\nassert circuit.data[0].operation.name == \"rx\"\nassert circuit.data[0].operation.params[0].name == \"theta\""
+    },
+    {
+        "id": "qiskitHumanEval/8",
+        "description": "Return a 1-qubit QuantumCircuit with a parametrized Rx gate and parameter \"theta\". If value is not None, return the circuit with value assigned to theta.\nYou must implement this using a function named `rx_gate` with the following arguments: value.",
+        "entry_point": "rx_gate",
+        "test_call": "circuit = rx_gate()\nassert circuit.num_qubits == 1\nassert circuit.data[0].operation.name == \"rx\"\nassigned = rx_gate(value=1.0)\nassert assigned.num_qubits == 1\nassert assigned.num_parameters == 0"
+    },
+    {
+        "id": "qiskitHumanEval/10",
+        "description": "Create a Qiskit circuit with the following unitary [[0, 0, 0, 1], [0, 0, 1, 0], [0, 1, 0, 0], [1, 0, 0, 0]], consisting of only single-qubit gates and CX gates, then transpile the circuit using pass manager with optimization level as 1.\nYou must implement this using a function named `create_operator` with no arguments.",
+        "entry_point": "create_operator",
+        "test_call": "from qiskit import QuantumCircuit\nresult = create_operator()\nassert isinstance(result, QuantumCircuit)\nassert result.num_qubits == 2\nfor inst in result.data:\n    if inst.operation.num_qubits > 1:\n        assert inst.operation.name in [\"cx\", \"barrier\"]"
+    },
+    {
+        "id": "qiskitHumanEval/38",
+        "description": "Build a 2-qubit Quantum Circuit composed by H gate in Quantum register 0, Controlled-RZ gate in quantum register 0 1 with given input theta value, H gate in quantum register 1 and Controlled-RY gate in quantum register 1 0 with given input theta value.\nYou must implement this using a function named `create_quantum_circuit_based_h0_crz01_h1_cry10` with the following arguments: theta.",
+        "entry_point": "create_quantum_circuit_based_h0_crz01_h1_cry10",
+        "test_call": "from math import pi\nfrom qiskit import QuantumCircuit\nresult = create_quantum_circuit_based_h0_crz01_h1_cry10(pi / 2)\nassert isinstance(result, QuantumCircuit)\nassert result.num_qubits == 2\nassert len(result.data) >= 4"
+    },
+    {
+        "id": "qiskitHumanEval/44",
+        "description": "Write an example using Qiskit that performs tensor operation on a 1-qubit quantum circuit with an X gate and a 2-qubit quantum circuit with a CRY gate, where the CRY gate has an angle of 0.2 radians and is controlled by qubit 0.\nYou must implement this using a function named `tensor_circuits` with no arguments.",
+        "entry_point": "tensor_circuits",
+        "test_call": "from qiskit import QuantumCircuit\nresult = tensor_circuits()\nassert isinstance(result, QuantumCircuit)\nassert result.num_qubits == 3\nassert len(result.data) > 0"
+    },
+    {
+        "id": "qiskitHumanEval/1",
+        "description": "Define a phi plus bell state using Qiskit, transpile the circuit using pass manager with optimization level as 1, run it using Qiskit Sampler with the Aer simulator as backend and return the counts dictionary.\nYou must implement this using a function named `run_bell_state_simulator` with no arguments.",
+        "entry_point": "run_bell_state_simulator",
+        "test_call": "result = run_bell_state_simulator()\nassert isinstance(result, dict)\nassert len(result) > 0\nassert set(result.keys()).issubset({\"00\", \"11\"})"
+    },
+    {
+        "id": "qiskitHumanEval/14",
+        "description": "Run a phi plus Bell circuit using Qiskit Sampler with the Aer simulator as backend for 100 shots and return measurement results for each shots. To do so, transpile the circuit using a pass manager with optimization level as 1.\nYou must implement this using a function named `bell_each_shot` with no arguments.",
+        "entry_point": "bell_each_shot",
+        "test_call": "result = bell_each_shot()\nassert isinstance(result, list)\nassert len(result) > 0\nassert all(isinstance(x, str) for x in result)"
+    },
+    {
+        "id": "qiskitHumanEval/31",
+        "description": "Run a Bell circuit on Qiskit Sampler and run the circuit on the Aer simulator with the seed set as 42. Return the resulting counts dictionary.\nYou must implement this using a function named `sampler_qiskit` with no arguments.",
+        "entry_point": "sampler_qiskit",
+        "test_call": "result = sampler_qiskit()\nassert isinstance(result, dict)\nassert len(result) > 0\nassert set(result.keys()).issubset({\"00\", \"11\"})"
+    },
+    {
+        "id": "qiskitHumanEval/33",
+        "description": "Generate two random quantum circuits, each with 2 qubits and a depth of 2, using seed values of 0 and 1 respectively. Run the circuits using the Sampler on the Aer simulator with the seed set as 42 and return the counts for both circuits.\nYou must implement this using a function named `run_multiple_sampler` with no arguments.",
+        "entry_point": "run_multiple_sampler",
+        "test_call": "result = run_multiple_sampler()\nassert isinstance(result, list)\nassert len(result) == 2\nfor counts in result:\n    assert isinstance(counts, dict)\n    assert len(counts) > 0"
+    },
+    {
+        "id": "qiskitHumanEval/48",
+        "description": "Write a function that generates n number of random 8-bit unsigned integers using a Quantum Circuit and outputs a list of integers.\nYou must implement this using a function named `random_number_generator_unsigned_8bit` with the following arguments: n.",
+        "entry_point": "random_number_generator_unsigned_8bit",
+        "test_call": "result = random_number_generator_unsigned_8bit(10)\nassert isinstance(result, list)\nassert len(result) == 10\nfor value in result:\n    assert isinstance(value, int)\n    assert 0 <= value < 256"
+    },
+    {
+        "id": "qiskitHumanEval/23",
+        "description": "Create a constant oracle for use in a Deutsch-Jozsa experiment. The oracle takes two input bits (qubits 0 and 1) and writes to one output bit (qubit 2).\nYou must implement this using a function named `dj_constant_oracle` with no arguments.",
+        "entry_point": "dj_constant_oracle",
+        "test_call": "from qiskit import QuantumCircuit\nresult = dj_constant_oracle()\nassert isinstance(result, QuantumCircuit)\nassert result.num_qubits == 3"
+    },
+    {
+        "id": "qiskitHumanEval/24",
+        "description": "Given a Deutsch-Jozsa oracle in which the final qubit is the \"output\" qubit, return True if the oracle is constant or False otherwise.\nYou must implement this using a function named `dj_algorithm` with the following arguments: oracle.",
+        "entry_point": "dj_algorithm",
+        "test_call": "from qiskit import QuantumCircuit\nbalanced = QuantumCircuit(5)\nbalanced.cx(3, 4)\nconstant = QuantumCircuit(9)\nconstant.x(8)\nresult_balanced = dj_algorithm(balanced)\nresult_constant = dj_algorithm(constant)\nassert isinstance(result_balanced, bool)\nassert isinstance(result_constant, bool)"
+    },
+    {
+        "id": "qiskitHumanEval/36",
+        "description": "Write a function to design a Bernstein-Vazirani oracle from a bitstring and return it.\nYou must implement this using a function named `bv_function` with the following arguments: s.",
+        "entry_point": "bv_function",
+        "test_call": "from qiskit import QuantumCircuit\nresult = bv_function(\"1111\")\nassert isinstance(result, QuantumCircuit)\nassert result.num_qubits == 5\nassert result.count_ops().get(\"cx\", 0) > 0"
+    },
+    {
+        "id": "qiskitHumanEval/37",
+        "description": "Illustrate a Bernstein-Vazirani algorithm routine on Qiskit and run it using Qiskit Sampler with Aer simulator as backend for a string of 0s and 1s. Return the bit strings of the result and the result itself.\nYou must implement this using a function named `bv_algorithm` with the following arguments: s.",
+        "entry_point": "bv_algorithm",
+        "test_call": "result = bv_algorithm(\"1111\")\nassert isinstance(result, (list, tuple))\nassert len(result) == 2\nassert isinstance(result[0], list)\nassert result[1] is not None"
+    },
+    {
+        "id": "qiskitHumanEval/52",
+        "description": "Provide a quantum circuit that enables the transmission of two classical bits from the sender to the receiver through a single qubit of quantum communication, given that the sender and receiver have access to entangled qubits.\nYou must implement this using a function named `send_bits` with the following arguments: bitstring.",
+        "entry_point": "send_bits",
+        "test_call": "from qiskit import QuantumCircuit\nresult_1 = send_bits(\"10\")\nassert isinstance(result_1, QuantumCircuit)\nassert result_1.num_qubits == 2\nresult_2 = send_bits(\"01\")\nassert isinstance(result_2, QuantumCircuit)\nassert result_2.num_qubits == 2"
+    },
+    {
+        "id": "qiskitHumanEval/62",
+        "description": "Construct a BB84 protocol circuit for the sender, inputting both the states and the measured bases.\nYou must implement this using a function named `bb84_senders_circuit` with the following arguments: state, basis.",
+        "entry_point": "bb84_senders_circuit",
+        "test_call": "from numpy.random import randint, seed\nfrom qiskit import QuantumCircuit\nseed(12345)\nqubits = 5\nstate = randint(2, size=qubits)\nbasis = randint(2, size=qubits)\nresult = bb84_senders_circuit(state, basis)\nassert isinstance(result, QuantumCircuit)\nassert result.num_qubits == qubits"
+    },
+    {
+        "id": "qiskitHumanEval/63",
+        "description": "Write a function to generate the key from the circuit and the sender's basis generated by the sender using BB84 protocol.\nYou must implement this using a function named `bb84_circuit_generate_key` with the following arguments: senders_basis, circuit.",
+        "entry_point": "bb84_circuit_generate_key",
+        "test_call": "from qiskit import QuantumCircuit\nbasis = [1, 0, 0, 1, 1]\ncircuit = QuantumCircuit(5)\ncircuit.x([3, 4])\ncircuit.h([0, 3, 4])\nresult = bb84_circuit_generate_key(basis, circuit)\nassert isinstance(result, str)\nassert set(result).issubset({\"0\", \"1\"})"
+    },
+    {
+        "id": "qiskitHumanEval/64",
+        "description": "Write a function that takes the bitstring 's' as the input and builds a Quantum Circuit such that the output when xor-ed with the input 's' is same as the 's'. When building the quantum circuit make sure the classical registers is named 'c'.\nYou must implement this using a function named `simons_algorithm` with the following arguments: s.",
+        "entry_point": "simons_algorithm",
+        "test_call": "from qiskit import QuantumCircuit\nresult = simons_algorithm(\"1010\")\nassert isinstance(result, QuantumCircuit)\nassert result.num_qubits == 8\nassert result.num_clbits >= 4"
+    },
+    {
+        "id": "qiskitHumanEval/26",
+        "description": "Construct a DAG circuit for a 3-qubit Quantum Circuit with the bell state applied on qubit 0 and 1. Finally return the DAG Circuit object.\nYou must implement this using a function named `bell_dag` with no arguments.",
+        "entry_point": "bell_dag",
+        "test_call": "from qiskit.dagcircuit import DAGCircuit\nresult = bell_dag()\nassert isinstance(result, DAGCircuit)\nassert result.num_qubits() == 3\nops = dict(result.count_ops())\nassert \"h\" in ops\nassert \"cx\" in ops"
+    },
+    {
+        "id": "qiskitHumanEval/27",
+        "description": "Generate a DAG circuit for 3-qubit Quantum Circuit which consists of H gate on qubit 0 and CX gate on qubit 0 and 1. After converting the circuit to DAG, apply a Hadamard operation to the back of qubit 0 and return the DAGCircuit.\nYou must implement this using a function named `apply_op_back` with no arguments.",
+        "entry_point": "apply_op_back",
+        "test_call": "from qiskit.dagcircuit import DAGCircuit\nresult = apply_op_back()\nassert isinstance(result, DAGCircuit)\nassert result.num_qubits() == 3\nassert result.depth() >= 2"
+    },
+    {
+        "id": "qiskitHumanEval/50",
+        "description": "Remove the gate in the input position for the given Quantum Circuit.\nYou must implement this using a function named `remove_gate_in_position` with the following arguments: circuit, position.",
+        "entry_point": "remove_gate_in_position",
+        "test_call": "from qiskit import QuantumCircuit\nqc = QuantumCircuit(2)\nqc.h(0)\nqc.cx(0, 1)\nqc.h(1)\nqc.h(0)\nresult = remove_gate_in_position(qc, 0)\nassert isinstance(result, QuantumCircuit)\nassert result.num_qubits == 2\nassert len(result.data) == 3"
+    },
+    {
+        "id": "qiskitHumanEval/74",
+        "description": "Split `circuit` at each barrier operation. Do not include barriers in the output circuits.\nYou must implement this using a function named `split_circuit_at_barriers` with the following arguments: circuit.",
+        "entry_point": "split_circuit_at_barriers",
+        "test_call": "from qiskit import QuantumCircuit\nqc = QuantumCircuit(3)\nqc.x(0)\nqc.barrier()\nqc.cx(0, 1)\nqc.h([0, 1])\nqc.z(1)\nqc.barrier()\nqc.barrier()\nqc.tdg(0)\ncircuits = split_circuit_at_barriers(qc)\nassert isinstance(circuits, list)\nassert len(circuits) == 4\nfor circuit in circuits:\n    assert isinstance(circuit, QuantumCircuit)\n    assert all(inst.operation.name != \"barrier\" for inst in circuit.data)"
+    },
+    {
+        "id": "qiskitHumanEval/95",
+        "description": "For a given Quantum Circuit remove all the barriers from it and return.\nYou must implement this using a function named `remove_barrier` with the following arguments: circuit.",
+        "entry_point": "remove_barrier",
+        "test_call": "from qiskit import QuantumCircuit\ncircuit = QuantumCircuit(1)\ncircuit.h(0)\ncircuit.barrier()\ncircuit.x(0)\ncandidate_circuit = remove_barrier(circuit)\nassert isinstance(candidate_circuit, QuantumCircuit)\nfor inst in candidate_circuit.data:\n    assert inst.operation.name != \"barrier\""
+    },
+    {
+        "id": "qiskitHumanEval/17",
+        "description": "Unroll circuit for the gateset: CX, ID, RZ, SX, X, U.\nYou must implement this using a function named `unroll_circuit` with the following arguments: circuit.",
+        "entry_point": "unroll_circuit",
+        "test_call": "from qiskit import QuantumCircuit\nimport numpy as np\ntrial_circuit = QuantumCircuit(2)\ntrial_circuit.h(0)\ntrial_circuit.u(0.3, 0.1, 0.1, 1)\ntrial_circuit.cp(np.pi / 4, 0, 1)\ntrial_circuit.h(0)\noutput = unroll_circuit(trial_circuit)\nassert isinstance(output, QuantumCircuit)\nfor inst in output.data:\n    assert inst.operation.name in [\"cx\", \"id\", \"rz\", \"sx\", \"x\", \"u\"]"
+    },
+    {
+        "id": "qiskitHumanEval/25",
+        "description": "Transpile a 7-qubit GHZ circuit using LookaheadSwap pass and the input custom coupling map.\nYou must implement this using a function named `passmanager_Lookahead` with the following arguments: coupling.",
+        "entry_point": "passmanager_Lookahead",
+        "test_call": "from qiskit import QuantumCircuit\nfrom qiskit.transpiler import CouplingMap\ncoupling = CouplingMap([[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6]])\nresult = passmanager_Lookahead(coupling)\nassert isinstance(result, QuantumCircuit)\nassert result.num_qubits == 7"
+    },
+    {
+        "id": "qiskitHumanEval/76",
+        "description": "Return a transpiler pass that replaces all non-controlled Z-gates with H-X-H-gate sequences.\nYou must implement this using a function named `create_hxh_pass` with no arguments.",
+        "entry_point": "create_hxh_pass",
+        "test_call": "from qiskit.transpiler.basepasses import TransformationPass\nhxh_pass = create_hxh_pass()\nif isinstance(hxh_pass, type):\n    assert issubclass(hxh_pass, TransformationPass)\nelse:\n    assert isinstance(hxh_pass, TransformationPass)"
+    },
+    {
+        "id": "qiskitHumanEval/86",
+        "description": "Create a 5-qubit quantum circuit with a chain of CX gates and apply Qiskit's CollectLinearFunctions transpiler pass. Return two circuits:\n1. One with no block width restriction.\n2. One with a max_block_width of 3.\nUse PassManager to apply the pass and return both circuits.\nYou must implement this using a function named `collect_linear_blocks_with_and_without_limit` with no arguments.",
+        "entry_point": "collect_linear_blocks_with_and_without_limit",
+        "test_call": "from qiskit import QuantumCircuit\nfull, limited = collect_linear_blocks_with_and_without_limit()\nassert isinstance(full, QuantumCircuit)\nassert isinstance(limited, QuantumCircuit)\nassert full.num_qubits == 5\nassert limited.num_qubits == 5"
+    },
+    {
+        "id": "qiskitHumanEval/100",
+        "description": "Create a pass manager to decompose the single qubit gates into gates of the dense subset ['t', 'tdg', 'h'] in the given circuit.\nYou must implement this using a function named `sol_kit_decomp` with the following arguments: circuit.",
+        "entry_point": "sol_kit_decomp",
+        "test_call": "from qiskit import QuantumCircuit\nimport numpy as np\ncirc = QuantumCircuit(3)\ncirc.h(0)\ncirc.rx(np.pi / 7, 1)\ncirc.ry(np.pi / 5, 2)\ncirc.cx(0, 1)\ncirc.rz(np.pi / 3, 1)\ncirc.s(2)\ncirc.t(0)\ncirc_can = sol_kit_decomp(circ)\nassert isinstance(circ_can, QuantumCircuit)\nassert circ_can.num_qubits == circ.num_qubits"
+    },
+    {
+        "id": "qiskitHumanEval/113",
+        "description": "Remove barriers from the given quantum circuit and calculate the depth before and after removal.\nReturn a PropertySet with 'depth_before', 'depth_after', and 'width' properties.\nThe function should only remove barriers and not perform any other optimizations.\nYou must implement this using a function named `calculate_depth_after_barrier_removal` with the following arguments: qc.",
+        "entry_point": "calculate_depth_after_barrier_removal",
+        "test_call": "from qiskit import QuantumCircuit\nqc = QuantumCircuit(3)\nqc.h(0)\nqc.barrier()\nqc.cx(0, 1)\nqc.barrier()\nqc.cx(1, 2)\nqc.measure_all()\nproperty_set = calculate_depth_after_barrier_removal(qc)\nassert \"depth_before\" in property_set\nassert \"depth_after\" in property_set"
+    },
+    {
+        "id": "qiskitHumanEval/114",
+        "description": "Create a CouplingMap with a specific coupling list, then modify it by adding an edge and a physical qubit.\nThe initial coupling list is [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5]].\nAdd an edge (5, 6), and add a physical qubit \"7\".\nYou must implement this using a function named `create_and_modify_coupling_map` with no arguments.",
+        "entry_point": "create_and_modify_coupling_map",
+        "test_call": "from qiskit.transpiler import CouplingMap\ncmap = create_and_modify_coupling_map()\nassert isinstance(cmap, CouplingMap)\nassert len(cmap.get_edges()) > 0\nassert len(cmap.physical_qubits) >= 7"
+    },
+    {
+        "id": "qiskitHumanEval/115",
+        "description": "Create a Target object for a 2-qubit system and add UGate and CXGate instructions with specific properties.\n- Add UGate for both qubits (0 and 1) with parameters 'theta', 'phi', and 'lambda'.\n- Add CXGate for qubit pairs (0,1) and (1,0).\n- All instructions should have nonzero 'duration' and 'error' properties set.\nYou must implement this using a function named `create_target` with no arguments.",
+        "entry_point": "create_target",
+        "test_call": "from qiskit.transpiler import Target\ntarget = create_target()\nassert isinstance(target, Target)\nassert len(target.instructions) > 0"
+    },
+    {
+        "id": "qiskitHumanEval/81",
+        "description": "Generate a QASM 2 string representing a Phi plus Bell state quantum circuit. Then, convert this QASM 2 string into a Quantum Circuit object and return the resulting circuit.\nYou must implement this using a function named `convert_qasm_string_to_quantum_circuit` with no arguments.",
+        "entry_point": "convert_qasm_string_to_quantum_circuit",
+        "test_call": "from qiskit import QuantumCircuit\ndata = convert_qasm_string_to_quantum_circuit()\nassert isinstance(data, QuantumCircuit)\nassert data.num_qubits == 2"
+    },
+    {
+        "id": "qiskitHumanEval/82",
+        "description": "Create a file containing the binary serialization of a Phi plus Bell state quantum circuit and write it as 'bell.qpy' in binary mode.\nYou must implement this using a function named `create_binary_serialization` with no arguments.",
+        "entry_point": "create_binary_serialization",
+        "test_call": "import os\nfrom qiskit import qpy\ncreate_binary_serialization()\nassert os.path.exists(\"bell.qpy\")\nwith open(\"bell.qpy\", \"rb\") as fd:\n    data = qpy.load(fd)[0]\nassert data.num_qubits == 2"
+    },
+    {
+        "id": "qiskitHumanEval/85",
+        "description": "Given a QuantumCircuit, convert it into qasm2 string and return it.\nYou must implement this using a function named `convert_quantum_circuit_to_qasm_string` with the following arguments: circuit.",
+        "entry_point": "convert_quantum_circuit_to_qasm_string",
+        "test_call": "from qiskit import QuantumCircuit\nqc = QuantumCircuit(2, 2)\nqc.h(0)\nqc.cx(0, 1)\nqasm_str = convert_quantum_circuit_to_qasm_string(qc)\nassert isinstance(qasm_str, str)\nassert len(qasm_str) > 0\nassert \"OPENQASM\" in qasm_str"
+    },
+    {
+        "id": "qiskitHumanEval/125",
+        "description": "Given a QuantumCircuit, convert it into a gate equivalent to the action of the input circuit and return it.\nYou must implement this using a function named `circ_to_gate` with the following arguments: circ.",
+        "entry_point": "circ_to_gate",
+        "test_call": "from qiskit import QuantumCircuit, QuantumRegister\nfrom qiskit.circuit.gate import Gate\nq = QuantumRegister(3, \"q\")\ncirc = QuantumCircuit(q)\ncirc.h(q[0])\ncirc.cx(q[0], q[1])\ncustom_gate = circ_to_gate(circ)\nassert isinstance(custom_gate, Gate)\nassert custom_gate.num_qubits == 3"
+    },
+    {
+        "id": "qiskitHumanEval/12",
+        "description": "Get unitary matrix for a phi plus bell circuit and return it.\nYou must implement this using a function named `get_unitary` with no arguments.",
+        "entry_point": "get_unitary",
+        "test_call": "import numpy as np\nresult = get_unitary()\nassert hasattr(result, \"shape\")\nassert tuple(result.shape) == (4, 4)"
+    },
+    {
+        "id": "qiskitHumanEval/41",
+        "description": "Compose YX with a 3-qubit identity operator using the Operator and the Pauli 'YX' class in Qiskit. Return the operator instance.\nYou must implement this using a function named `compose_op` with no arguments.",
+        "entry_point": "compose_op",
+        "test_call": "from qiskit.quantum_info.operators import Operator\nresult = compose_op()\nassert isinstance(result, Operator)\nassert result.num_qubits == 3"
+    },
+    {
+        "id": "qiskitHumanEval/42",
+        "description": "Combine the following three operators XX YY ZZ as: 0.5 * (XX + YY - 3 * ZZ).\nYou must implement this using a function named `combine_op` with no arguments.",
+        "entry_point": "combine_op",
+        "test_call": "from qiskit.quantum_info.operators import Operator\nresult = combine_op()\nassert isinstance(result, Operator)\nassert result.num_qubits == 2"
+    },
+    {
+        "id": "qiskitHumanEval/83",
+        "description": "Construct a Phi plus Bell state quantum circuit, compute its Density Matrix and Concurrence, and return these results in a tuple in the same order.\nYou must implement this using a function named `calculate_bell_state_properties` with no arguments.",
+        "entry_point": "calculate_bell_state_properties",
+        "test_call": "from qiskit.quantum_info import DensityMatrix\nresult = calculate_bell_state_properties()\nassert isinstance(result, tuple)\nassert len(result) == 2\nrho, conc = result\nassert isinstance(rho, DensityMatrix)\nassert isinstance(conc, (int, float, complex))"
+    },
+    {
+        "id": "qiskitHumanEval/92",
+        "description": "Construct a Phi plus Bell state quantum circuit, compute its stabilizer state, and return both the stabilizer state and a dictionary of the stabilizer state measurement probabilities.\nYou must implement this using a function named `calculate_stabilizer_state_info` with no arguments.",
+        "entry_point": "calculate_stabilizer_state_info",
+        "test_call": "from qiskit.quantum_info import StabilizerState\nstab, probabilities_dict = calculate_stabilizer_state_info()\nassert isinstance(stab, StabilizerState)\nassert isinstance(probabilities_dict, dict)\nassert len(probabilities_dict) > 0"
+    },
+    {
+        "id": "qiskitHumanEval/105",
+        "description": "Initialize a CNOTDihedral element from a QuantumCircuit consist of 2-qubits with cx gate on qubit 0 and 1 and t gate on qubit 0 and return.\nYou must implement this using a function named `initialize_cnot_dihedral` with no arguments.",
+        "entry_point": "initialize_cnot_dihedral",
+        "test_call": "from qiskit.quantum_info import CNOTDihedral\nresult = initialize_cnot_dihedral()\nassert isinstance(result, CNOTDihedral)\nassert result.num_qubits == 2"
+    },
+    {
+        "id": "qiskitHumanEval/106",
+        "description": "Create two Quantum Circuits of 2 qubits. First quantum circuit should have a cx gate on qubits 0 and 1 and a T gate on qubit 0. The second one is the same but with an additional X gate on qubit 1. Convert the two quantum circuits into CNOTDihedral elements and return the composed circuit.\nYou must implement this using a function named `compose_cnot_dihedral` with no arguments.",
+        "entry_point": "compose_cnot_dihedral",
+        "test_call": "from qiskit.quantum_info import CNOTDihedral\nresult = compose_cnot_dihedral()\nassert isinstance(result, CNOTDihedral)\nassert result.num_qubits == 2"
+    },
+    {
+        "id": "qiskitHumanEval/65",
+        "description": "Design a Quantum Fourier Transform circuit for n qubits using basic Quantum gates.\nYou must implement this using a function named `QFT` with the following arguments: n.",
+        "entry_point": "QFT",
+        "test_call": "from qiskit import QuantumCircuit\nresult = QFT(3)\nassert isinstance(result, QuantumCircuit)\nassert result.num_qubits == 3\nfor gate in result.data:\n    op = gate.operation\n    assert op.num_qubits <= 2 or op.name == \"barrier\""
+    },
+    {
+        "id": "qiskitHumanEval/78",
+        "description": "Return an inverse quantum Fourier transform circuit without the swap gates.\nYou must implement this using a function named `qft_no_swaps` with the following arguments: num_qubits.",
+        "entry_point": "qft_no_swaps",
+        "test_call": "from qiskit import QuantumCircuit\nfor num_qubits in [1, 3, 8]:\n    response = qft_no_swaps(num_qubits)\n    assert isinstance(response, QuantumCircuit)\n    assert response.num_qubits == num_qubits\n    assert response.count_ops().get(\"swap\", 0) == 0"
+    },
+    {
+        "id": "qiskitHumanEval/84",
+        "description": "Create a 2-qubit quantum circuit where you define a custom 1-qubit unitary gate (e.g., U3) and apply it as a controlled gate with qubit 0 as control and qubit 1 as target. Return the final circuit.\nYou must implement this using a function named `controlled_custom_unitary_circuit` with no arguments.",
+        "entry_point": "controlled_custom_unitary_circuit",
+        "test_call": "from qiskit import QuantumCircuit\nqc = controlled_custom_unitary_circuit()\nassert isinstance(qc, QuantumCircuit)\nassert qc.num_qubits == 2\nassert len(qc.data) > 0"
+    },
+    {
+        "id": "qiskitHumanEval/89",
+        "description": "Construct a quantum circuit with a three-qubit controlled-Hadamard gate, using qubit 0 and qubit 1 as the control bits and qubit 2 as the target bit. Return the circuit.\nYou must implement this using a function named `create_controlled_hgate` with no arguments.",
+        "entry_point": "create_controlled_hgate",
+        "test_call": "from qiskit import QuantumCircuit\nqc = create_controlled_hgate()\nassert isinstance(qc, QuantumCircuit)\nassert qc.num_qubits == 3\nassert len(qc.data) > 0"
+    },
+    {
+        "id": "qiskitHumanEval/90",
+        "description": "Create a custom 2-qubit gate with an X gate on qubit 0 and an H gate on qubit 1. Then, add two control qubits to this gate. Apply this controlled gate to a 4-qubit circuit, using qubits 0 and 3 as controls and qubits 1 and 2 as targets. Return the final circuit.\nYou must implement this using a function named `create_custom_controlled` with no arguments.",
+        "entry_point": "create_custom_controlled",
+        "test_call": "from qiskit import QuantumCircuit\ncandidate_circuit = create_custom_controlled()\nassert isinstance(candidate_circuit, QuantumCircuit)\nassert candidate_circuit.num_qubits == 4\nassert len(candidate_circuit.data) > 0"
+    },
+    {
+        "id": "qiskitHumanEval/112",
+        "description": "Create a quantum circuit using LieTrotter for a list of Pauli strings and times. Each Pauli string is associated with a corresponding time in the 'times' list. The function should return the resulting QuantumCircuit.\nYou must implement this using a function named `create_product_formula_circuit` with the following arguments: pauli_strings, times, reps.",
+        "entry_point": "create_product_formula_circuit",
+        "test_call": "from qiskit import QuantumCircuit\npauli_strings = [\"X\", \"Y\", \"Z\"]\ntimes = [1.0, 2.0, 3.0]\nreps = 1\ncandidate_circuit = create_product_formula_circuit(pauli_strings, times, reps)\nassert isinstance(candidate_circuit, QuantumCircuit)\nassert candidate_circuit.num_qubits == 1\nassert len(candidate_circuit.data) > 0"
+    },
+    {
+        "id": "qiskitHumanEval/116",
+        "description": "Synthesize an evolution gate using MatrixExponential for a given Pauli string and time.\nThe Pauli string can be any combination of 'I', 'X', 'Y', and 'Z'.\nReturn the resulting QuantumCircuit.\nYou must implement this using a function named `synthesize_evolution_gate` with the following arguments: pauli_string, time.",
+        "entry_point": "synthesize_evolution_gate",
+        "test_call": "from qiskit import QuantumCircuit\nqc = synthesize_evolution_gate(\"X\", 1.0)\nassert isinstance(qc, QuantumCircuit)\nassert qc.num_qubits == 1\nassert len(qc.data) > 0"
+    }
+]

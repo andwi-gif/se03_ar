@@ -1,0 +1,70 @@
+Qiskit 2.0 migration notes
+
+Scope: circuit construction, transpilation, and backend interfaces only.
+
+## Removal notices
+
+### Circuit construction
+
+- Legacy instruction-level `c_if` conditions were removed. Use `QuantumCircuit.if_test(...)` with structured control flow.
+- `Instruction.condition` is no longer present on generic `Instruction` objects.
+- `Instruction.duration` and `Instruction.unit` were removed from most instructions. Query timing data from `Target` / `InstructionProperties` instead.
+
+### Transpilation
+
+- `backend_properties` is no longer accepted by `transpile(...)` or `generate_preset_pass_manager(...)`. Use `target` or `backend`.
+- `instruction_durations` and `timing_constraints` are no longer accepted by `transpile(...)` or `generate_preset_pass_manager(...)`. Use `target` or `backend`.
+- `inst_map` was removed from `transpile(...)`, `generate_preset_pass_manager(...)`, and `Target.from_configuration(...)`.
+- Custom basis gates are no longer accepted through `basis_gates`; define them in a `Target`.
+- Passing `coupling_map` and/or `basis_gates` together with `backend` is discouraged and raises a warning in v2.0 because `backend` should be the single source of truth.
+- A custom `coupling_map` can no longer be combined with `backend` or `basis_gates` when 3+ qubit gates are involved; use a custom `Target`.
+
+### Backend interfaces and pulse-related removals
+
+- `qiskit.pulse` was removed without replacement.
+- `BackendProperties` was removed.
+- Pulse-related backend methods were removed from `BackendV2`: `instruction_schedule_map`, `drive_channel`, `measure_channel`, `acquire_channel`, `control_channel`.
+- Pulse-related target methods were removed: `has_calibration`, `get_calibration`, `instruction_schedule_map`, `update_from_instruction_schedule_map`.
+- `InstructionProperties.calibration` was removed.
+
+## API change tables
+
+### Circuit construction and control flow
+
+| Removed / changed API | Alternative |
+| --- | --- |
+| `qc.x(0).c_if(cr, 3)` | `with qc.if_test((cr, 3)): qc.x(0)` |
+| `Instruction.condition` | Use `isinstance(op, IfElseOp)` / `isinstance(op, WhileLoopOp)` or `getattr(op, "condition", None)` for compatibility checks |
+| `Instruction.duration` / `Instruction.unit` | Query `target[op_name][qubits]` and read `InstructionProperties.duration` |
+
+### Transpilation interface changes
+
+| Old input / pattern | v2 alternative |
+| --- | --- |
+| `backend_properties=...` | Build or pass `target=...` or `backend=...` |
+| `instruction_durations=...` | Encode durations in `Target` / `Target.from_configuration(...)` |
+| `timing_constraints=...` | Encode timing constraints in `Target` / `Target.from_configuration(...)` |
+| `inst_map=...` | No replacement |
+| `basis_gates=["my_x", "cx"]` with custom gates | Define a `Target` with `custom_name_mapping` |
+| `backend=...` together with `coupling_map=...` or `basis_gates=...` | Build one consistent `Target` instead |
+
+### Backend interface migration: `BackendV1` to `BackendV2`
+
+| `BackendV1` access pattern | `BackendV2` replacement | Notes |
+| --- | --- | --- |
+| `backend.configuration().n_qubits` | `backend.num_qubits` | |
+| `backend.configuration().coupling_map` | `backend.coupling_map` | Returns a `CouplingMap`, and `backend.target` remains the more complete source of connectivity info |
+| `backend.configuration().backend_name` | `backend.name` | |
+| `backend.configuration().backend_version` | `backend.backend_version` | Distinct from `BackendV2.version`, which is the interface version |
+| `backend.configuration().basis_gates` | `backend.operation_names` | `backend.target` may contain richer information than a flat name list |
+| `backend.configuration().dt` | `backend.dt` | |
+| `backend.configuration().dtm` | `backend.dtm` | |
+| `backend.configuration().max_experiments` | `backend.max_circuits` | |
+| `backend.configuration().online_date` | `backend.online_date` | |
+| `InstructionDurations.from_backend(backend)` | `backend.instruction_durations` | |
+| `backend.defaults().instruction_schedule_map` | Removed | Part of pulse removal |
+| `backend.properties().t1(0)` | `backend.qubit_properties(0).t1` | |
+| `backend.properties().t2(0)` | `backend.qubit_properties(0).t2` | |
+| `backend.properties().frequency(0)` | `backend.qubit_properties(0).frequency` | |
+| `backend.properties().readout_error(0)` | `backend.target["measure"][(0,)].error` | |
+| `backend.properties().readout_length(0)` | `backend.target["measure"][(0,)].duration` | |

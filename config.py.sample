@@ -1,0 +1,130 @@
+# =============================================================================
+# config.py
+#
+# Copy this file to config.py and adjust the model lists, paths, and provider
+# settings for your local environment.
+#
+# This file is organized from general settings to provider-specific settings,
+# with derived registries collected at the end.
+# =============================================================================
+
+import os
+from pathlib import Path
+
+# -----------------------------------------------------------------------------
+# Paths
+# -----------------------------------------------------------------------------
+
+ROOT = Path(__file__).parent
+
+PROBLEMS_DIR = ROOT / "data" / "problems"
+GENERATIONS_DIR = ROOT / "data" / "generations"
+EXECUTION_RESULTS_DIR = ROOT / "data" / "execution"
+REPAIRS_DIR = ROOT / "data" / "repairs"
+ANALYSIS_DIR = ROOT / "data" / "analysis"
+MIGRATION_DIR = ROOT / "data" / "migration_notes"
+
+ANCHORED_FILE = PROBLEMS_DIR / "prompts_anchored.json"
+
+
+# -----------------------------------------------------------------------------
+# Benchmark Settings
+# -----------------------------------------------------------------------------
+
+TEMPERATURE = 0.8
+MAX_TOKENS = 1024
+K_SAMPLES = 3
+
+# Execution timeout per snippet in seconds.
+EXECUTION_TIMEOUT = 30
+
+
+# -----------------------------------------------------------------------------
+# Qiskit Versions
+# -----------------------------------------------------------------------------
+
+QISKIT_VERSIONS = {
+    "v0": {
+        "anchor_prefix": "Using Qiskit v0.43, ",
+        "conda_env": "qiskit-v0",
+    },
+    "v1": {
+        "anchor_prefix": "Using Qiskit v1.3, ",
+        "conda_env": "qiskit-v1",
+    },
+    "v2": {
+        "anchor_prefix": "Using Qiskit v2.0, ",
+        "conda_env": "qiskit-v2",
+    },
+}
+
+
+# -----------------------------------------------------------------------------
+# Provider Credentials
+# -----------------------------------------------------------------------------
+
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
+GROQ_BASE_URL = os.environ.get("GROQ_BASE_URL", "https://api.groq.com/openai/v1")
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
+OPENAI_BASE_URL = os.environ.get("OPENAI_BASE_URL", "https://api.openai.com/v1")
+ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
+ANTHROPIC_BASE_URL = os.environ.get("ANTHROPIC_BASE_URL", "")
+OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY", "")
+OPENROUTER_BASE_URL = os.environ.get("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
+OPENROUTER_SITE_URL = os.environ.get("OPENROUTER_SITE_URL", "")
+OPENROUTER_APP_NAME = os.environ.get("OPENROUTER_APP_NAME", "")
+OPENAI_COMPATIBLE_API_KEY = os.environ.get("OPENAI_COMPATIBLE_API_KEY", "")
+OPENAI_COMPATIBLE_BASE_URL = os.environ.get("OPENAI_COMPATIBLE_BASE_URL", "")
+
+
+# -----------------------------------------------------------------------------
+# Provider Model Lists
+# -----------------------------------------------------------------------------
+
+GROQ_MODELS = [
+    # {"id": "openai/gpt-oss-120b", "label": "gpt_oss_120b", "requests_per_minute": 20},
+    # {"id": "qwen/qwen3-32b", "label": "qwen3_32b", "extra_body": {"reasoning_effort": "none"}},
+]
+
+CODEX_MODELS = [
+    # {"id": "gpt-5.4", "label": "gpt_5_4_medium", "reasoning_effort": "medium", "requests_per_minute": 10},
+]
+
+OPENAI_MODELS = [
+    # {"id": "gpt-4.1", "label": "gpt_4_1", "requests_per_minute": 20},
+    # {"id": "o4-mini", "label": "o4_mini", "extra_body": {"reasoning": {"effort": "low"}}},
+]
+
+ANTHROPIC_MODELS = [
+    # {"id": "claude-sonnet-4-5", "label": "claude_sonnet_45"},
+    # {"id": "claude-sonnet-4-5", "label": "claude_sonnet_45_low", "extra_body": {"thinking": {"type": "enabled", "budget_tokens": 1024}}},
+]
+
+OPENROUTER_MODELS = [
+    # {"id": "google/gemma-4-31b-it:free", "label": "gemma_4_31b", "requests_per_minute": 10},
+]
+
+OPENAI_COMPATIBLE_MODELS = [
+    # {
+    #     "id": "your-provider/model-name",
+    #     "label": "your_model_label",
+    #     "api_key_env": "YOUR_PROVIDER_API_KEY",
+    #     "base_url": "https://your-provider.example/v1",
+    #     "requests_per_minute": 10,
+    #     "extra_body": {},
+    # },
+]
+
+
+# -----------------------------------------------------------------------------
+# Derived Registries
+# -----------------------------------------------------------------------------
+
+ALL_MODELS = (
+    GROQ_MODELS
+    + CODEX_MODELS
+    + OPENAI_MODELS
+    + ANTHROPIC_MODELS
+    + OPENROUTER_MODELS
+    + OPENAI_COMPATIBLE_MODELS
+)
